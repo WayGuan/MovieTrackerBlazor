@@ -1,0 +1,36 @@
+﻿@page "/genres"
+@inject HttpClient Http 
+@* web service*@
+
+<PageTitle>Genres</PageTitle>
+
+<h1>Genres</h1>
+
+
+@if (genres == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped">
+        <tbody>
+            @foreach (var genre in genres)
+            {
+                <tr>
+                    <td>@genre.GenreDescription</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Genre[] genres;
+
+    protected override async Task OnInitializedAsync()
+    {
+        genres = await Http.GetFromJsonAsync<Genre[]>("genres");
+    }
+
+}
